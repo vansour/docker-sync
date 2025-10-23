@@ -1,0 +1,47 @@
+name: Sync Python
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull and tag image
+        run: |
+          docker pull docker.io/python:3.9-trixie
+          docker tag docker.io/python:3.9-trixie ghcr.io/vansour/python:3.9-trixie
+
+          docker pull docker.io/python:3.10-trixie
+          docker tag docker.io/python:3.10-trixie ghcr.io/vansour/python:3.10-trixie
+
+          docker pull docker.io/python:3.11-trixie
+          docker tag docker.io/python:3.11-trixie ghcr.io/vansour/python:3.11-trixie
+
+          docker pull docker.io/python:3.12-trixie
+          docker tag docker.io/python:3.12-trixie ghcr.io/vansour/python:3.12-trixie
+
+          docker pull docker.io/python:3.13-trixie
+          docker tag docker.io/python:3.13-trixie ghcr.io/vansour/python:3.13-trixie
+
+
+      - name: Push image
+        run: |
+          docker push ghcr.io/vansour/python:3.9-trixie
+
+          docker push ghcr.io/vansour/python:3.10-trixie
+
+          docker push ghcr.io/vansour/python:3.11-trixie
+
+          docker push ghcr.io/vansour/python:3.12-trixie
+          
+          docker push ghcr.io/vansour/python:3.13-trixie
