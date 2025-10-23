@@ -1,0 +1,23 @@
+name: Sync Debian Trixie
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull and tag image
+        run: |
+          docker pull docker.io/debian:trixie
+          docker tag docker.io/debian:trixie ghcr.io/vansour/debian:trixie
+
+      - name: Push image
+        run: docker push ghcr.io/vansour/debian:trixie
