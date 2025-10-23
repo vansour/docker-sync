@@ -1,4 +1,4 @@
-name: Sync Debian Trixie-slim
+name: Sync Debian
 
 on:
   workflow_dispatch:
@@ -18,8 +18,14 @@ jobs:
 
       - name: Pull and tag image
         run: |
+          docker pull docker.io/debian:trixie
+          docker tag docker.io/debian:trixie ghcr.io/vansour/debian:trixie
+
           docker pull docker.io/debian:trixie-slim
           docker tag docker.io/debian:trixie-slim ghcr.io/vansour/debian:trixie-slim
 
       - name: Push image
-        run: docker push ghcr.io/vansour/debian:trixie-slim
+        run: |
+          docker push ghcr.io/vansour/debian:trixie
+          
+          docker push ghcr.io/vansour/debian:trixie-slim

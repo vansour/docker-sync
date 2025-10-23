@@ -1,4 +1,4 @@
-name: Sync Debian Trixie
+name: Sync Rust
 
 on:
   workflow_dispatch:
@@ -18,8 +18,9 @@ jobs:
 
       - name: Pull and tag image
         run: |
-          docker pull docker.io/debian:trixie
-          docker tag docker.io/debian:trixie ghcr.io/vansour/debian:trixie
+          docker pull docker.io/rust:trixie
+          docker tag docker.io/rust:trixie ghcr.io/vansour/rust:trixie
 
       - name: Push image
-        run: docker push ghcr.io/vansour/debian:trixie
+        run: |
+          docker push ghcr.io/vansour/rust:trixie
